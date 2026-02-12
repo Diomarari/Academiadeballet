@@ -1,0 +1,15 @@
+name: Alerta Push a Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Enviar notificación a ntfy
+        run: |
+          curl -d "holaaaaaaaaaa!! estoy probando las alertas!! - Nuevo push detectado" ntfy.sh/devops-itla
