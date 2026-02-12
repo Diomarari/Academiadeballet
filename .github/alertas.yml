@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: Enviar notificación a ntfy
         run: |
-          curl -d "holaaaaaaaaaa!! estoy probando las alertas!! - Nuevo push detectado" ntfy.sh/devops-itla
+          curl -d " Nuevo push en main - Repo actualizado correctamente" https://ntfy.sh/billiem4r
