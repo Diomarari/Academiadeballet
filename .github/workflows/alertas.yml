@@ -1,4 +1,4 @@
-name: Alerta Push a Main
+name: Alerta + Deploy automático a Surge
 
 on:
   push:
@@ -6,10 +6,24 @@ on:
       - main
 
 jobs:
-  notify:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Enviar notificaci�n a ntfy
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Surge
+        run: npm install -g surge
+
+      - name: Deploy to Surge
+        run: surge ./ ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
+
+      - name: Enviar notificación a ntfy
         run: |
-          curl -d "Nuevo push en main - Repo actualizado correctamente" https://ntfy.sh/billiem4r
+          curl -d "🚀 Nuevo deploy exitoso en Surge desde GitHub Actions" https://ntfy.sh/billiem4r
