@@ -13,16 +13,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Instalar Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Instalar Surge
+      - name: Install Surge
         run: npm install -g surge
 
-      - name: Deploy a Surge
+      - name: Deploy to Surge
         env:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+          SURGE_DOMAIN: ${{ secrets.SURGE_DOMAIN }}
         run: |
-          surge ./ https://academiadeballet.surge.sh --token $SURGE_TOKEN
+          surge ./ https://$SURGE_DOMAIN --token $SURGE_TOKEN
