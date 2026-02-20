@@ -1,4 +1,4 @@
-name: Alerta + Deploy automático a Surge
+name: Deploy a Surge
 
 on:
   push:
@@ -11,19 +11,18 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
-      - name: Install Surge
+      - name: Instalar Surge
         run: npm install -g surge
 
-      - name: Deploy to Surge
-        run: surge ./ ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
-
-      - name: Enviar notificación a ntfy
+      - name: Deploy a Surge
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
         run: |
-          curl -d "🚀 Nuevo deploy exitoso en Surge desde GitHub Actions" https://ntfy.sh/billiem4r
+          surge ./ https://academiadeballet.surge.sh --token $SURGE_TOKEN
